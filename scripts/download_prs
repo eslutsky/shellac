@@ -1,0 +1,23 @@
+#!/usr/bin/bash
+
+link="$1"
+
+
+proto="$(echo $link | grep :// | sed -e's,^\(.*://\).*,\1,g')"
+# remove the protocol
+url="$(echo ${1/$proto/})"
+
+#echo $url
+path="$(echo $url | grep / | cut -d/ -f3-)"
+
+
+
+job_name="$(echo $path | grep / | cut -d/ -f8)"
+build_id="$(echo $path | grep / | cut -d/ -f9)"
+
+echo $path
+echo $job_name
+echo $build_id
+
+cd ~/dev/tmp/aa
+gsutil -m cp -R gs://${path} .
